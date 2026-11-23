@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Missão Matemática | Protótipo</title>
+<style>
+:root{--bg:#07111f;--panel:#101f34;--panel2:#172b45;--line:#28415f;--cyan:#39d8f2;--blue:#4387ff;--purple:#9a75ff;--gold:#ffd166;--green:#43d9a3;--red:#ff667d;--muted:#9fb2ca;--white:#f4f8ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0%,#142d4b 0,#07111f 48%,#050b14 100%);color:var(--white);font:15px/1.5 Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 15px;color:#06101d;background:var(--cyan);font-weight:800;transition:.15s}button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:disabled{opacity:.35;cursor:not-allowed;transform:none}.secondary{background:#263c59;color:var(--white);border:1px solid #3a5677}.purple{background:var(--purple);color:#100a24}.green{background:var(--green);color:#062319}.danger{background:#54283a;color:#ffdce3;border:1px solid #87445a}.gold{background:var(--gold);color:#241900}.small{padding:7px 10px;font-size:13px}.muted{color:var(--muted)}.hidden{display:none!important}
+header{max-width:1200px;margin:auto;padding:22px 22px 10px;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:13px}.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,var(--cyan),var(--purple));display:grid;place-items:center;color:#07111f;font-size:25px;font-weight:1000;box-shadow:0 0 30px #39d8f244}.brand h1{font-size:clamp(21px,3vw,30px);letter-spacing:1.5px;margin:0}.brand p{margin:0;color:var(--muted);font-size:11px;letter-spacing:2px}.top-tag{border:1px solid var(--line);border-radius:30px;padding:7px 12px;color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:1px}
+main{max-width:1200px;margin:0 auto;padding:12px 22px 50px}.hero{border:1px solid #315273;background:linear-gradient(120deg,#112a45dd,#171b39dd);border-radius:24px;padding:30px;position:relative;overflow:hidden;margin:10px 0 22px}.hero:after{content:"∑";position:absolute;right:5%;top:-38px;font-size:220px;color:#39d8f20b;font-weight:900}.hero h2{font-size:clamp(30px,5vw,48px);line-height:1.05;margin:0 0 8px}.hero h2 span{color:var(--cyan)}.hero p{color:#c2d2e6;max-width:650px;margin:0}.eyebrow{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:2px;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:linear-gradient(145deg,#12243a,#0d1b2d);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 12px 35px #0002}.menu-card{min-height:170px;display:flex;flex-direction:column;justify-content:space-between}.menu-card .symbol{font-size:27px;color:var(--cyan)}.menu-card h3{margin:8px 0 3px;font-size:19px}.menu-card p{margin:0 0 15px;color:var(--muted);font-size:13px}.section-title{display:flex;justify-content:space-between;align-items:end;margin:28px 0 12px;gap:12px}.section-title h2{margin:0;font-size:21px}.section-title p{margin:0;color:var(--muted);font-size:13px}
+label{display:block;color:#fff;font-size:13px;font-weight:700;margin:12px 0 6px}input,select{width:100%;border-radius:11px;border:1px solid #38516f;background:#091727;color:var(--white);padding:12px;outline:none}input:focus,select:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #39d8f21c}.form{max-width:560px;margin:24px auto}.form input{border:1px solid #fff}.form input:focus{border-color:var(--cyan)}.form-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.team-row,.rank-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #243b56}.team-row:last-child,.rank-row:last-child{border:0}.team-name{font-weight:800}.team-meta{color:var(--muted);font-size:12px}.pill{display:inline-flex;padding:4px 9px;border-radius:20px;background:#183b50;color:var(--cyan);font-size:11px;font-weight:800}.pill.done{background:#143e35;color:var(--green)}.pill.pending{background:#49391b;color:var(--gold)}
+.play-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:16px}.challenge-head{display:flex;justify-content:space-between;gap:12px;align-items:start}.challenge-head h2{margin:4px 0 8px;font-size:clamp(25px,3vw,32px);font-weight:900}.challenge-head p{margin:0;color:#f4f8ff;font-size:clamp(17px,1.8vw,21px);font-weight:800;line-height:1.45}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}.stat{background:#091827;border:1px solid #243d5a;border-radius:13px;padding:10px}.stat small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}.stat strong{font-size:21px}.timerbar{height:8px;background:#263b55;border-radius:10px;overflow:hidden;margin-top:10px}.timerbar span{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--gold),var(--red));width:100%;transition:width .5s linear}
+.challenge-area{margin-top:18px;background:#0a192a;border:1px solid #2a4563;border-radius:16px;padding:20px;min-height:280px}.challenge-area h3{margin:0 0 8px}.challenge-area p{color:#f4f8ff;font-size:clamp(17px,1.8vw,21px);font-weight:800;line-height:1.45}.side-card{margin-bottom:13px}.side-card h3{font-size:15px;margin:0 0 10px}.hint-list{display:grid;gap:8px}.hint{background:#172a41;border:1px solid #304966;border-radius:10px;padding:9px 10px;font-size:13px;color:#d8e6f5}.hint.locked{color:#71869e}.action-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.feedback{padding:11px 13px;border-radius:11px;margin-top:12px;font-weight:700;font-size:13px}.feedback.good{background:#123b32;color:#91f3cf;border:1px solid #27755e}.feedback.bad{background:#472536;color:#ffc0cc;border:1px solid #85435a}.feedback.info{background:#142e49;color:#b8e8ff;border:1px solid #315b7e}
+.river{display:grid;grid-template-columns:1fr 120px 1fr;gap:8px;align-items:stretch;margin:16px 0}.bank{background:#132d3c;border:1px solid #31576b;border-radius:14px;padding:12px;min-height:145px}.bank h4{text-align:center;color:#9eddf1;margin:0 0 10px}.river-water{border-radius:12px;background:repeating-linear-gradient(0deg,#0e4160,#0e4160 12px,#105074 13px,#105074 24px);display:grid;place-items:center;color:#a5eaff;font-size:12px;text-align:center}.person{display:inline-block;margin:4px;padding:8px 9px;border-radius:10px;background:#263c58;border:1px solid #54708f;color:#fff;font-size:15px;font-weight:900}.person.selected{outline:2px solid var(--gold);background:#57451f}.boat-control{text-align:center;margin:10px 0}
+.num-bank{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.num-chip{background:#253d5a;color:white;border:1px solid #456485;padding:9px 13px;border-radius:10px}.num-chip.used{opacity:.25;pointer-events:none}.magic-grid{display:grid;grid-template-columns:repeat(3,70px);gap:5px;justify-content:center;margin:16px auto}.magic-cell{height:65px;border:1px solid #52708f;border-radius:9px;background:#142b43;color:white;font-size:24px;font-weight:900;padding:0}.magic-cell.filled{background:#17455a;color:#74eaff}
+.coins{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.coin{width:43px;height:43px;border-radius:50%;border:2px solid #d5ad55;background:linear-gradient(145deg,#ffe9a4,#b98123);color:#382407;font-weight:900;padding:0}.coin.on{outline:3px solid var(--cyan);outline-offset:2px}.scale{display:grid;grid-template-columns:1fr 1fr;gap:12px}.plate{background:#172b43;border:1px dashed #5c7795;border-radius:12px;padding:12px;min-height:90px}.plate h4{margin:0 0 8px;color:var(--gold)}
+.jugs{display:flex;justify-content:center;align-items:end;gap:35px;margin:18px 0}.jug-wrap{text-align:center}.jug{width:105px;height:155px;border:3px solid #8cb4d0;border-top:0;border-radius:0 0 17px 17px;position:relative;overflow:hidden;background:#0b2033;display:flex;align-items:end;justify-content:center}.jug-three{width:88px;height:125px}.water{width:100%;background:linear-gradient(0deg,#0876bd,#43d8f2);transition:height .3s;opacity:.85}.jug-label{font-weight:900;margin-top:8px}.jug-actions{display:grid;gap:7px}
+.square-grid{display:grid;grid-template-columns:repeat(6, minmax(25px,42px));gap:0;justify-content:center;margin:18px auto;background:#000;border:0}.square-grid span{aspect-ratio:1;border:1px solid #fff;background:#000;display:block}
+footer{text-align:center;color:#6e829b;font-size:11px;padding:30px 10px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.play-layout{grid-template-columns:1fr}.river{grid-template-columns:1fr 65px 1fr}.challenge-head{display:block}.challenge-head button{margin-top:10px}.hero{padding:22px}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:460px){header{padding:15px}.top-tag{display:none}main{padding:10px 13px 35px}.stats{gap:5px}.stat strong{font-size:17px}.stat{padding:8px}.magic-grid{grid-template-columns:repeat(3,58px)}.magic-cell{height:58px}.jugs{gap:16px}.jug{width:88px;height:135px}}
+#challengePrompt{white-space:pre-line}
+
+.card,.stat,.hero,.form,.menu-card,.side-card,.bank,.jug,.feedback,.hint,.rank-row,.team-row,input,select,textarea,.person,.river-water,td,th{border-color:#fff!important}
+input,select,textarea,#challengeArea select{border:1.5px solid #fff!important}
+input::placeholder,textarea::placeholder{color:#fff!important;opacity:1}
+#hintList button,#hintList .hint,label{color:#fff}
+.error-flash{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#210b16b8;animation:errorFade 1.25s ease forwards;pointer-events:none}
+.error-flash .error-panel{background:#4b1727;border:2px solid #fff;border-radius:20px;padding:24px 38px;text-align:center;animation:errorPop .35s ease}
+.error-flash .error-panel strong{display:block;color:#fff;font-size:clamp(26px,4vw,42px);font-weight:900}
+.error-flash .error-panel span{display:block;color:#fff;font-size:17px;margin-top:5px}
+@keyframes errorFade{0%,75%{opacity:1}100%{opacity:0}}
+@keyframes errorPop{0%{transform:scale(.75)}100%{transform:scale(1)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">∑</div><div><h1>MISSÃO MATEMÁTICA</h1><p>PENSE • INVESTIGUE • RESOLVA • CONQUISTE</p></div></div>
+ <div class="top-tag">CRIADORES • PROF. CARLOS JR. E PROF. IRISMAR</div>
+</header>
+<main>
+<section id="home">
+ <div class="hero"><div class="eyebrow">CENTRAL DE DESAFIOS</div><h2>MISSÃO <span>MATEMÁTICA</span></h2><p>Uma competição de lógica, estratégia e raciocínio. Forme sua equipe, enfrente os desafios e conquiste seu lugar no ranking.</p></div>
+ <div class="grid">
+  <div class="card menu-card"><div><div class="symbol">＋</div><h3>Nova equipe</h3><p>Cadastre uma equipe e inicie uma nova missão.</p></div><button onclick="showNewTeam()">Cadastrar equipe</button></div>
+  <div class="card menu-card"><div><div class="symbol">▣</div><h3>Carregar dados</h3><p>Continue uma competição salva neste navegador.</p></div><button class="secondary" onclick="showSaved()">Ver equipes salvas</button></div>
+  <div class="card menu-card"><div><div class="symbol">🏆</div><h3>Ranking geral</h3><p>Classificação das equipes que concluíram todos os desafios.</p></div><button class="gold" onclick="showRanking()">Consultar ranking</button></div>
+ </div>
+ <div class="card" style="margin:18px 0">
+  <div class="eyebrow">COMO FUNCIONA A MISSÃO</div><h2 style="margin:0 0 10px">Regras da competição</h2>
+  <ul style="margin:0;padding-left:22px;color:#f4f8ff;font-weight:700;line-height:1.7">
+   <li>Cada desafio começa com 2.000 pontos, exceto o Desafio Final, que vale 9.000 pontos.</li>
+   <li>O tempo reduz a pontuação continuamente; quando termina, a equipe pode continuar tentando, mas a pontuação chega a zero.</li>
+   <li>Cada dica utilizada ou resposta incorreta desconta 200 pontos.</li>
+   <li>A equipe pode escolher livremente os desafios disponíveis.</li>
+   <li>O Desafio Final só é liberado após a conclusão dos 13 desafios anteriores.</li>
+   <li>O tempo pausa ao sair da atividade; o progresso fica salvo neste navegador.</li>
+   <li>A equipe entra no ranking após concluir todos os desafios, inclusive o Desafio Final.</li>
+  </ul></div>
+ <div class="section-title"><div><h2>Desafios desta versão</h2><p>Desafios de lógica, padrões, geometria e raciocínio.</p></div><span class="pill">14 MISSÕES</span></div>
+ <div class="grid" id="challengeCards"></div>
+</section>
+
+<section id="newTeam" class="hidden">
+ <div class="card form"><div class="eyebrow">NOVA COMPETIÇÃO</div><h2>Identifique sua equipe</h2><p class="muted">Informe o nome da equipe e a turma. Os dados serão salvos neste navegador.</p>
+ <label for="teamName">Nome da equipe</label><input id="teamName" maxlength="40" placeholder="Ex.: Os Estrategistas">
+ <label for="teamClass">Turma</label><input id="teamClass" maxlength="30" placeholder="Ex.: 2º ano B">
+ <div class="form-actions"><button onclick="createTeam()">Criar equipe e iniciar</button><button class="secondary" onclick="goHome()">Voltar</button></div>
+ </div>
+</section>
+
+<section id="saved" class="hidden">
+ <div class="section-title"><div><div class="eyebrow">RETOMAR COMPETIÇÃO</div><h2>Equipes salvas</h2><p>Selecione uma equipe para continuar de onde parou.</p></div><button class="secondary small" onclick="goHome()">Voltar</button></div>
+ <div class="card" id="savedList"></div>
+</section>
+
+<section id="challengeSelect" class="hidden">
+  <div class="section-title">
+    <div><div class="eyebrow">ESCOLHA SUA MISSÃO</div><h2>Selecione um desafio</h2><p>Escolha livremente qual desafio sua equipe deseja resolver.</p></div>
+    <button class="secondary small" onclick="pauseAndHome()">Salvar e sair</button>
+  </div>
+  <div class="card" style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><strong id="selectTeamName"></strong><span class="muted" id="selectTeamClass"></span></div><div><span class="muted">PONTUAÇÃO TOTAL</span><strong id="selectTeamScore" style="display:block;font-size:26px;color:var(--gold)">0 pontos</strong></div></div>
+  <div class="grid" id="challengeSelectCards"></div>
+</section>
+
+<section id="ranking" class="hidden">
+ <div class="section-title"><div><div class="eyebrow">PLACAR OFICIAL</div><h2>Ranking geral</h2><p>Somente equipes que concluíram os 14 desafios.</p></div><button class="secondary small" onclick="goHome()">Voltar</button></div>
+ <div class="card" id="rankingList"></div>
+</section>
+
+<section id="game" class="hidden">
+ <div class="section-title"><div><div class="eyebrow">EQUIPE EM MISSÃO</div><h2 id="activeTeam"></h2><p id="activeClass"></p></div><button class="secondary small" onclick="pauseAndHome()">Salvar e sair</button></div>
+ <div class="play-layout">
+  <div class="card">
+   <div class="challenge-head"><div><span class="pill" id="challengeNumber">DESAFIO 1/14</span><h2 id="challengeTitle"></h2><p id="challengePrompt"></p></div></div>
+   <div class="stats">
+    <div class="stat"><small>Tempo</small><strong id="timeDisplay">10:00</strong><div class="timerbar"><span id="timeBar"></span></div></div>
+    <div class="stat"><small>Pontuação</small><strong id="scoreDisplay">2.000</strong></div>
+    <div class="stat"><small>Erros / dicas</small><strong id="penaltyDisplay">0 / 0</strong></div>
+   </div>
+   <div id="challengeArea" class="challenge-area"></div>
+   <div id="feedback" class="feedback info">Boa missão! Leia as instruções e comece.</div>
+  </div>
+  <aside>
+   <div class="card side-card"><h3>Central de dicas <span class="pill" id="hintCount">3 disponíveis</span></h3><p class="muted" style="font-size:12px;margin-top:0">Cada dica utilizada desconta 200 pontos.</p><div class="hint-list" id="hintList"></div></div>
+   <div class="card side-card"><h3>Progresso da equipe</h3><div id="progressList"></div></div>
+   <div class="card side-card"><h3>Regras rápidas</h3><p class="muted" style="font-size:12px;margin:0">• Cada desafio começa com 2.000 pontos.<br>• O tempo reduz a pontuação continuamente.<br>• Dica ou erro: −200 pontos.<br>• O tempo pausa ao sair e ao trocar de desafio.</p></div>
+  </aside>
+ </div>
+</section>
+</main>
+<footer>MISSÃO MATEMÁTICA • Criado pelos Profs. Carlos Jr. e Irismar • Dados salvos localmente neste navegador</footer>
+
+<script>
+const KEY='missaoMatematicaPrototypeV1';
+const challenges=[
+ {title:'Como atravessar o rio?',minutes:10,type:'river',prompt:'Três homens querem atravessar um rio. O barco suporta uma massa máxima de 130 kg. Eles têm massas de 60, 65 e 80 kg. Como devem proceder para atravessar o rio sem afundar o barco?',hints:['Comece pelos dois homens mais leves.','Pense em quem precisa retornar para permitir a travessia do homem mais pesado.']},
+ {title:'Quadrado mágico',minutes:15,type:'magic',prompt:'Distribua os números de 1 a 9 no quadrado mágico 3 × 3, sem repetir nenhum número, de modo que a soma de cada linha, coluna e diagonal seja 15.',hints:['Que tal colocar a mediana desses números no centro?']},
+ {title:'Encontre a senha correta',minutes:15,type:'code',prompt:'Escreva um número de 6 algarismos que:\n\n• Seja divisível por 9;\n• Seja divisível por 5;\n• O 1º algarismo é o dobro do segundo e a soma dos dois tem como resultado o 3º algarismo, que é 6;\n• O penúltimo algarismo é um número que multiplicado por ele mesmo tem como resultado 9;\n• O 4º algarismo corresponde à soma do 2º e 6º algarismo.',hints:['Um número divisível por 5 termina em 0 ou 5.','Para ser divisível por 9, a soma dos seis algarismos deve ser múltipla de 9.']},
+ {title:'Encontre a moeda falsa',minutes:15,type:'coin',prompt:'Há 9 moedas aparentemente idênticas. Oito têm o mesmo peso e uma é falsa, ligeiramente mais leve. Usando uma balança de dois pratos e no máximo duas pesagens, descubra qual é a moeda falsa.',hints:['Divida as nove moedas em três grupos de três.','Compare dois grupos de três moedas na primeira pesagem.']},
+ {title:'Problema dos baldes',minutes:10,type:'jugs',prompt:'Você tem dois baldes sem marcações: um de 5 litros e outro de 3 litros. Usando uma bica, transferências e descarte de água, consiga exatamente 4 litros no balde de 5 litros.',hints:['Você pode jogar o conteúdo dos baldes fora.']},
+ {title:'Quantos quadrados?',minutes:15,type:'squares',prompt:'Uma folha quadriculada está dividida em exatamente 6 linhas por 6 colunas. Quantos quadrados distintos podem ser identificados no desenho?',hints:['Não conte apenas os quadradinhos menores.','Conte separadamente os quadrados 1×1, 2×2, 3×3 e assim por diante.']},
+ {title:'O Cofre da Cápsula do Tempo',minutes:15,type:'answer',answer:'36825',prompt:'Durante a reforma da biblioteca da escola, encontrou-se um cofre com uma cápsula do tempo. Para abri-lo sem bloquear o sistema, descubra a senha de cinco algarismos distintos analisando as cinco tentativas registradas no painel:\n\n• 4 6 0 1 7 — 1 correto, na posição certa.\n• 7 1 9 2 0 — 1 correto, na posição certa.\n• 0 4 7 1 9 — Nenhum algarismo faz parte da senha.\n• 8 6 5 2 3 — 5 corretos, sendo 2 nas posições certas e 3 nas posições erradas.\n• 3 0 1 4 7 — 1 correto, na posição certa.\n\nQual é a senha que abre o cofre?',hints:['Elimine os dígitos que não pertencem à senha pela terceira pista.']},
+ {title:'O Código do Laboratório de Matemática',minutes:10,type:'answer',answer:'24',prompt:'Na tela de acesso ao laboratório aparecem três exemplos resolvidos e um desafio final:\n\n2 + 9 => 20\n3 + 5 => 18\n4 + 7 => 32\n6 + 3 => ??\n\nQual número libera a trava de segurança do laboratório?',hints:['Que tal multiplicar?','E depois somar.']},
+ {title:'O Código da Matriz Energética',minutes:10,type:'answer',answer:'AEI28',prompt:'Um grupo de estudantes precisa abrir um laboratório de química cuja senha de acesso é um código alfanumérico de 5 caracteres formado por 3 letras (seguindo a ordem alfabética padrão de 26 letras, sem considerar K, W, Y) seguidas de 2 algarismos.\n\nAs restrições para a senha são:\n\n• As três letras devem ser vogais distintas e em ordem crescente.\n• O primeiro algarismo deve ser um número primo par.\n• O segundo algarismo deve ser um número cubo perfeito (n³), maior que zero e menor que 10.\n\nQual é a senha correta?',hints:[]},
+ {title:'A Rota dos Vetores',minutes:10,type:'answer',answer:'42',prompt:'Em um torneio de robótica, a sequência das coordenadas numéricas segue um padrão: (2, 4), (3, 9), (4, 16), (5, 25), (x, y).\n\nDetermine a coordenada final (x, y) e some os dois valores para encontrar a chave final. Qual é o valor resultante?',hints:[]},
+ {title:'Polígonos e Razões Trigonométricas',minutes:10,type:'answer',answer:'decagono',prompt:'Em um polígono regular convexo, a razão entre a medida de um ângulo interno e a de seu respectivo ângulo externo é igual a 4.\n\nQual é o nome do polígono? Responda com o nome no singular, em letras minúsculas e sem acentos.',hints:['Lembre-se de que a soma de um ângulo interno com seu respectivo ângulo externo em qualquer vértice é sempre 180°.']},
+ {title:'Circunferências e Cordas',minutes:10,type:'answer',answer:'8',prompt:'Uma corda AB de uma circunferência possui uma distância de 3 cm em relação ao centro da circunferência. Sabendo que o raio mede 5 cm, qual é o comprimento total da corda AB, em centímetros? Responda apenas com o valor numérico inteiro.',hints:['Terno Pitagórico.']},
+ {title:'Meninas na Escola',minutes:15,type:'girls',prompt:'Três meninas que frequentam a mesma escola possuem mochilas de cores diferentes e gostam de sucos e matérias distintas. Identifique a cor da mochila, a matéria e o suco preferido de cada uma delas.\n\n1. A menina que gosta de português gosta de suco de abacaxi.\n2. A mochila de Manuela não é laranja.\n3. A garota da mochila vermelha gosta de suco de limão.\n4. Aline gosta de história e não gosta de suco de uva.\n5. Flávia não gosta de matemática.',hints:['Flávia não gosta de História.','Manuela gosta de Rosa.']},
+ {title:'DESAFIO FINAL',minutes:45,type:'einstein',points:9000,prompt:'Albert Einstein criou este teste de QI (raciocínio lógico) no século passado e afirmou que 98% da população mundial não era capaz de resolvê-lo. Será que você faz parte desse seleto grupo que consegue resolvê-lo?\n\nO teste tem as seguintes regras:\n1. Há 5 casas de cores diferentes;\n2. Em cada casa mora um homem, cada um com uma nacionalidade diferente;\n3. Esses 5 proprietários bebem diferentes bebidas, fumam diferentes marcas de cigarros e têm um animal de estimação preferido;\n4. Nenhum deles têm o mesmo animal, fumam o mesmo cigarro, bebem a mesma bebida, tem a mesma nacionalidade ou tem a casa com a mesma cor.\n\nCor da casa: amarela, azul, branca, verde, vermelha\nNacionalidade: alemão, dinamarquês, inglês, norueguês, sueco\nBebida: água, café, chá, cerveja, leite\nCigarro: Blends, Blue Master, Dunhill, Pall Mall, Prince\nAnimal: cachorros, cavalos, gatos, pássaros, peixes',hints:[]}
+
+];
+let teams=[],current=null,timer=null,selectedPeople=[],magicSelected=null,coinSide='left',coinSelection={left:[],right:[]},weighings=0,jug={a:0,b:0};
+function load(){try{teams=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){teams=[]}
+ teams.forEach(t=>{if(!Array.isArray(t.results))t.results=[];while(t.results.length<challenges.length)t.results.push(null);if(!t.states)t.states={};t.completed=t.results.slice(0,challenges.length).every(Boolean)});persist()}
+function persist(){localStorage.setItem(KEY,JSON.stringify(teams))}
+function show(id){['home','newTeam','saved','challengeSelect','ranking','game'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==id))}
+function goHome(){stopTimer();current=null;show('home')}
+function showNewTeam(){show('newTeam')}
+function createTeam(){let name=document.getElementById('teamName').value.trim(),cls=document.getElementById('teamClass').value.trim();if(!name||!cls){alert('Preencha o nome da equipe e a turma.');return}
+ let t={id:Date.now()+'-'+Math.random().toString(16).slice(2),name,cls,created:new Date().toISOString(),current:0,completed:false,results:challenges.map(()=>null),states:{},active:false};teams.push(t);persist();current=t;showChallengeList()}
+function showSaved(){stopTimer();show('saved');let list=document.getElementById('savedList'),pending=teams.filter(t=>!t.completed);if(!pending.length){list.innerHTML='<p class="muted">Não há equipes com competições em andamento.</p>';return}
+ list.innerHTML=pending.map(t=>`<div class="team-row"><div><div class="team-name">${esc(t.name)}</div><div class="team-meta">${esc(t.cls)} • ${t.results.filter(Boolean).length}/14 desafios concluídos</div></div><div style="display:flex;gap:7px;align-items:center"><button class="small" onclick="loadTeam('${t.id}')">Continuar</button><button class="danger small" title="Excluir equipe" aria-label="Excluir equipe" onclick="event.stopPropagation();deleteTeam('${t.id}')">🗑</button></div></div>`).join('')}
+function loadTeam(id){current=teams.find(t=>t.id===id);if(!current)return;showChallengeList()}
+function deleteTeam(id){
+  const team=teams.find(t=>t.id===id);
+  if(!team)return;
+  if(!confirm('Deseja realmente excluir a equipe "'+team.name+'"? Essa ação não poderá ser desfeita.'))return;
+  teams=teams.filter(t=>t.id!==id);persist();showSaved();
+}
+function showRanking(){stopTimer();show('ranking');let done=teams.filter(t=>t.completed).sort((a,b)=>b.results.reduce((s,r)=>s+(r?.score||0),0)-a.results.reduce((s,r)=>s+(r?.score||0),0));let el=document.getElementById('rankingList');if(!done.length){el.innerHTML='<p class="muted">Ainda não há equipes que concluíram todos os desafios.</p>';return}el.innerHTML=done.map((t,i)=>`<div class="rank-row"><strong>${i+1}º</strong><div style="flex:1"><div class="team-name">${esc(t.name)}</div><div class="team-meta">${esc(t.cls)}</div></div><strong>${fmt(t.results.reduce((s,r)=>s+(r?.score||0),0))} pts</strong></div>`).join('')}
+function fmt(n){return Math.round(n).toLocaleString('pt-BR')}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function startChallenge(i){stopTimer();if(!current)return;current.current=i;let state=current.states[i];if(!state)state=current.states[i]={elapsed:0,hints:0,errors:0,restarts:0,started:false,solved:false,data:{}};state.started=true;current.active=true;persist();show('game');renderChallenge();startTimer()}
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
+function startTimer(){stopTimer();timer=setInterval(()=>{if(!current)return;let s=current.states[current.current],max=challenges[current.current].minutes*60;if(s.elapsed<max)s.elapsed++;persist();updateStats();},1000)}
+function pauseAndHome(){if(current){current.active=false;persist()}stopTimer();current=null;goHome()}
+function scoreFor(i){let s=current.states[i],c=challenges[i],T=c.minutes*60,base=c.points||2000;return Math.max(0,base*Math.max(0,1-s.elapsed/T)-200*(s.hints+s.errors+s.restarts))}
+function updateStats(){if(!current)return;let i=current.current,s=current.states[i],T=challenges[i].minutes*60,remain=Math.max(0,T-s.elapsed);document.getElementById('timeDisplay').textContent=String(Math.floor(remain/60)).padStart(2,'0')+':'+String(remain%60).padStart(2,'0');document.getElementById('timeBar').style.width=(100*remain/T)+'%';document.getElementById('scoreDisplay').textContent=fmt(scoreFor(i));document.getElementById('penaltyDisplay').textContent=(s.errors+s.restarts)+' / '+s.hints;document.getElementById('hintCount').textContent=(challenges[i].hints.length-s.hints)+' disponíveis'}
+function renderChallenge(){let i=current.current,c=challenges[i];document.getElementById('activeTeam').textContent=current.name;document.getElementById('activeClass').textContent='Turma: '+current.cls;document.getElementById('challengeNumber').textContent=`${i===challenges.length-1?'DESAFIO FINAL':'DESAFIO '+(i+1)+'/'+challenges.length} • ${c.minutes} MIN`;document.getElementById('challengeTitle').textContent=c.title;document.getElementById('challengePrompt').textContent=c.prompt;document.getElementById('feedback').className='feedback info';document.getElementById('feedback').textContent='Resolva o desafio. Seu progresso é salvo automaticamente.';document.getElementById('hintList').innerHTML=c.hints.length?c.hints.map((h,j)=>`<button class="secondary small" id="hint${j}" onclick="useHint(${j})">Revelar dica ${j+1} (−200)</button><div id="hintText${j}" class="hint hidden"></div>`).join(''):'<p class="muted">Este desafio não possui dicas.</p>';for(let j=0;j<current.states[i].hints;j++){let btn=document.getElementById('hint'+j),txt=document.getElementById('hintText'+j);if(btn&&txt){btn.disabled=true;txt.classList.remove('hidden');txt.textContent=c.hints[j]}}renderProgress();renderArea();updateStats()}
+function renderProgress(){document.getElementById('progressList').innerHTML=challenges.map((c,i)=>`<div class="team-row" style="padding:7px 0"><span style="font-size:12px">${i+1}. ${c.title}</span><span class="pill ${current.results[i]?'done':i===current.current?'pending':''}">${current.results[i]?'Concluído':i===current.current?'Atual':'Pendente'}</span></div>`).join('')}
+function feedback(msg,type='info'){let f=document.getElementById('feedback');f.className='feedback '+type;f.textContent=msg}
+function penalty(kind,msg){let s=current.states[current.current];if(kind==='error')s.errors++;if(kind==='restart')s.restarts++;persist();updateStats();feedback(msg+' Penalidade de 200 pontos.', 'bad')}
+function useHint(j){let s=current.states[current.current],c=challenges[current.current];if(j!==s.hints){feedback('As dicas devem ser reveladas em ordem.','bad');return}if(s.hints>=c.hints.length)return;s.hints++;persist();document.getElementById('hint'+j).disabled=true;document.getElementById('hintText'+j).classList.remove('hidden');document.getElementById('hintText'+j).textContent=c.hints[j];updateStats()}
+function renderArea(){let i=current.current,c=challenges[i],a=document.getElementById('challengeArea');if(c.type==='river')renderRiver(a);if(c.type==='magic')renderMagic(a);if(c.type==='code')renderCode(a);if(c.type==='coin')renderCoin(a);if(c.type==='jugs')renderJugs(a);if(c.type==='squares')renderSquares(a);if(c.type==='answer')renderTextAnswer(a);if(c.type==='girls')renderGirls(a);if(c.type==='einstein')renderEinstein(a)}
+
+function renderTextAnswer(a){a.innerHTML=`<h3>Digite sua resposta</h3><p>Leia as condições do enunciado e informe a resposta solicitada.</p><label>Resposta</label><input id="textAnswer" autocomplete="off" placeholder="Digite sua resposta"><div class="action-row"><button onclick="checkTextAnswer()">Confirmar resposta</button></div>`}
+function checkTextAnswer(){let c=challenges[current.current],v=document.getElementById('textAnswer').value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,''),e=c.answer.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');if(v===e)finishChallenge();else wrongAnswer('Resposta incorreta. Analise novamente as pistas e tente outra vez.')}
+const girlsData={names:['Aline','Flávia','Manuela'],cats:[{key:'bag',label:'Mochila',values:['Vermelha','Laranja','Rosa']},{key:'subject',label:'Matéria',values:['Português','História','Matemática']},{key:'juice',label:'Suco',values:['Abacaxi','Limão','Uva']}],solution:{Aline:{bag:'Vermelha',subject:'História',juice:'Limão'},Flávia:{bag:'Laranja',subject:'Português',juice:'Abacaxi'},Manuela:{bag:'Rosa',subject:'Matemática',juice:'Uva'}}};
+function renderGirls(a){
+ let d=current.states[current.current].data;if(!d.picks)d.picks={};
+ a.innerHTML=`<h3>Tabela de dedução</h3><p>Use a seta em cada célula para escolher uma possibilidade. Você pode alterar suas escolhas sempre que necessário.</p><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;min-width:650px"><thead><tr><th style="padding:8px">Nome</th>${girlsData.cats.map(c=>`<th style="padding:8px">${c.label}</th>`).join('')}</tr></thead><tbody>${girlsData.names.map(n=>`<tr><th style="text-align:left;padding:8px">${n}</th>${girlsData.cats.map(c=>{let key=n+'|'+c.key,selected=(d.picks[key]||[])[0]||'';return `<td style="padding:6px;border:1px solid #fff"><select style="min-width:125px;border:1.5px solid #fff" onchange="setGirlPick('${n}','${c.key}',this.value)"><option value="">— Escolher —</option>${c.values.map(v=>`<option value="${v}" ${selected===v?'selected':''}>${v}</option>`).join('')}</select></td>`}).join('')}</tr>`).join('')}</tbody></table></div><div class="action-row"><button onclick="checkGirls()">Conferir tabela</button><button class="secondary" onclick="clearGirls()">Limpar tabela</button></div>`;
+}
+function setGirlPick(n,k,v){let d=current.states[current.current].data;if(!d.picks)d.picks={};d.picks[n+'|'+k]=v?[v]:[];persist()}
+function clearGirls(){current.states[current.current].data.picks={};persist();renderGirls(document.getElementById('challengeArea'))}
+function checkGirls(){let p=current.states[current.current].data.picks||{},ok=true;for(let n of girlsData.names)for(let c of girlsData.cats){let a=p[n+'|'+c.key]||[];if(a.length!==1||a[0]!==girlsData.solution[n][c.key])ok=false}for(let c of girlsData.cats){let vals=girlsData.names.map(n=>(p[n+'|'+c.key]||[])[0]);if(new Set(vals).size!==3)ok=false}if(ok)finishChallenge();else wrongAnswer('A tabela ainda não está correta. Revise as possibilidades marcadas.')}
+const einsteinData={rows:[{key:'color',label:'Cor',values:['Amarela','Azul','Branca','Verde','Vermelha']},{key:'nationality',label:'Nacionalidade',values:['Alemão','Dinamarquês','Inglês','Norueguês','Sueco']},{key:'drink',label:'Bebida',values:['Água','Café','Chá','Cerveja','Leite']},{key:'cigarette',label:'Cigarro',values:['Blends','Blue Master','Dunhill','Pall Mall','Prince']},{key:'animal',label:'Animal',values:['Cachorros','Cavalos','Gatos','Pássaros','Peixes']}],solution:[{color:'Amarela',nationality:'Norueguês',drink:'Água',cigarette:'Dunhill',animal:'Gatos'},{color:'Azul',nationality:'Dinamarquês',drink:'Chá',cigarette:'Blends',animal:'Cavalos'},{color:'Vermelha',nationality:'Inglês',drink:'Leite',cigarette:'Pall Mall',animal:'Pássaros'},{color:'Verde',nationality:'Alemão',drink:'Café',cigarette:'Prince',animal:'Peixes'},{color:'Branca',nationality:'Sueco',drink:'Cerveja',cigarette:'Blue Master',animal:'Cachorros'}],clues:['O Inglês vive na casa Vermelha.','O Sueco tem Cachorros como animais de estimação.','O Dinamarquês bebe Chá.','A casa Verde fica do lado esquerdo da casa Branca.','O homem que vive na casa Verde bebe Café.','O homem que fuma Pall Mall cria Pássaros.','O homem que vive na casa Amarela fuma Dunhill.','O homem que vive na casa do meio bebe Leite.','O Norueguês vive na primeira casa.','O homem que fuma Blends vive ao lado do que tem Gatos.','O homem que cria Cavalos vive ao lado do que fuma Dunhill.','O homem que fuma Blue Master bebe Cerveja.','O Alemão fuma Prince.','O Norueguês vive ao lado da casa Azul.','O homem que fuma Blends é vizinho do que bebe Água.']};
+function renderEinstein(a){let d=current.states[current.current].data;if(!d.grid)d.grid=Array.from({length:5},()=>({}));if(!d.checked)d.checked=[];a.innerHTML=`<h3>Preencha a tabela das cinco casas</h3><p>Selecione uma opção em cada categoria de cada casa. Marque as pistas conforme for verificando-as; essas marcações são apenas um apoio para organizar a investigação.</p><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;min-width:760px"><thead><tr><th></th>${[1,2,3,4,5].map(n=>`<th>Casa ${n}</th>`).join('')}</tr></thead><tbody>${einsteinData.rows.map(r=>`<tr><th style="text-align:left;padding:6px">${r.label}</th>${[0,1,2,3,4].map(i=>`<td style="padding:4px"><select style="min-width:125px" onchange="setEinstein(${i},'${r.key}',this.value)"><option value="">—</option>${r.values.map(v=>`<option value="${v}" ${d.grid[i][r.key]===v?'selected':''}>${v}</option>`).join('')}</select></td>`).join('')}</tr>`).join('')}</tbody></table></div><h3 style="margin-top:18px">Pistas para conferência</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:7px">${einsteinData.clues.map((cl,i)=>`<label style="display:flex;align-items:flex-start;gap:8px;background:#172a41;padding:8px;border-radius:8px;margin:0"><input type="checkbox" style="width:auto;margin-top:4px" ${d.checked.includes(i)?'checked':''} onchange="toggleEinsteinClue(${i},this.checked)"><span>${i+1}. ${cl}</span></label>`).join('')}</div><div class="action-row"><button onclick="checkEinstein()">Conferir tabela</button><button class="secondary" onclick="resetEinstein()">Limpar tabela</button></div>`}
+function setEinstein(i,k,v){current.states[current.current].data.grid[i][k]=v;persist()}
+function toggleEinsteinClue(i,on){let d=current.states[current.current].data;if(on&&!d.checked.includes(i))d.checked.push(i);if(!on)d.checked=d.checked.filter(x=>x!==i);persist()}
+function resetEinstein(){current.states[current.current].data={grid:Array.from({length:5},()=>({})),checked:[]};persist();renderEinstein(currentArea())}
+function checkEinstein(){let g=current.states[current.current].data.grid||[],ok=true;for(let i=0;i<5;i++)for(let r of einsteinData.rows)if(g[i]?.[r.key]!==einsteinData.solution[i][r.key])ok=false;for(let r of einsteinData.rows){let vals=g.map(h=>h?.[r.key]);if(new Set(vals).size!==5)ok=false}if(ok)finishChallenge();else wrongAnswer('A tabela ainda não corresponde a todas as pistas. Revise as casas e tente novamente.')}
+function finishChallenge(){
+  let i=current.current,s=current.states[i];if(current.results[i])return;
+  let score=Math.round(scoreFor(i));current.results[i]={score,elapsed:s.elapsed,hints:s.hints,errors:s.errors,restarts:s.restarts};
+  current.completed=current.results.slice(0,challenges.length).every(Boolean);current.active=false;persist();stopTimer();
+  let total=current.results.reduce((sum,r)=>sum+(r?.score||0),0);
+  document.getElementById('challengeArea').innerHTML=`<div style="text-align:center;padding:34px 16px"><div style="font-size:58px">🎉</div><h2 style="font-size:30px;font-weight:900;color:var(--green)">PARABÉNS, EQUIPE!</h2><p style="font-size:19px;font-weight:800;color:#f4f8ff">Vocês concluíram: ${challenges[i].title}</p><p>Pontuação neste desafio: <strong style="color:var(--gold)">${fmt(score)} pontos</strong></p><p>Pontuação total da equipe: <strong style="color:var(--gold)">${fmt(total)} pontos</strong></p><button onclick="showChallengeList()">Voltar à seleção de desafios</button></div>`;
+  show('game');renderProgress();
+}
+function wrongAnswer(msg='Resposta incorreta. Tente novamente.'){
+ penalty('error',msg);
+ const prior=document.getElementById('errorFlash');if(prior)prior.remove();
+ const overlay=document.createElement('div');overlay.id='errorFlash';overlay.className='error-flash';
+ overlay.innerHTML='<div class="error-panel"><strong>✖ RESPOSTA INCORRETA!</strong><span>Tente novamente.</span></div>';
+ document.body.appendChild(overlay);setTimeout(()=>{if(overlay.parentNode)overlay.remove()},1300);
+}
+function showChallengeList(){
+  if(!current)return;
+  stopTimer();
+  current.active=false;
+  persist();
+  document.getElementById('selectTeamName').textContent=current.name;
+  document.getElementById('selectTeamClass').textContent=' • Turma: '+current.cls;
+  document.getElementById('selectTeamScore').textContent=fmt(current.results.reduce((sum,r)=>sum+(r?.score||0),0))+' pontos';
+  document.getElementById('challengeSelectCards').innerHTML=challenges.map((c,i)=>{
+    const done=!!current.results[i];
+    const locked=i===challenges.length-1&&!current.results.slice(0,challenges.length-1).every(Boolean);
+    return `<div class="card menu-card"><div><span class="pill ${done?'done':'pending'}">${done?'CONCLUÍDO':locked?'BLOQUEADO':'DESAFIO '+(i+1)}</span><h3>${c.title}</h3><p>${c.minutes} minutos${c.points?' • '+fmt(c.points)+' pontos':''}</p>${locked?'<p class="muted">Conclua os 13 desafios anteriores para liberar.</p>':''}</div><button ${done||locked?'disabled':''} onclick="startChallenge(${i})">${done?'Desafio concluído':locked?'Desafio bloqueado':'Escolher desafio'}</button></div>`;
+  }).join('');
+  show('challengeSelect');
+}
+function renderRiver(a){
+  let d=current.states[current.current].data;
+  if(!d.left){d.left=['60 kg','65 kg','80 kg'];d.right=[];d.boat='left'}
+  a.innerHTML=`<h3>Travessia do rio</h3><p>Selecione uma ou duas pessoas na margem onde o barco está. A soma das massas não pode ultrapassar 130 kg.</p><div class="river"><div class="bank"><h4>Margem A <span id="boatLeft" class="boat-marker">🛶</span></h4><div id="bankLeft"></div></div><div class="river-water">≈ RIO ≈<br><small>Capacidade: 130 kg</small></div><div class="bank"><h4>Margem B <span id="boatRight" class="boat-marker">🛶</span></h4><div id="bankRight"></div></div></div><div class="boat-control"><p id="riverSelection" class="muted">Selecione os passageiros na margem de origem.</p><button onclick="moveBoat()">Atravessar com selecionados</button><button class="secondary" onclick="resetRiver()">Reiniciar</button></div>`;
+  selectedPeople=[];drawRiver();
+}
+function drawRiver(){
+  let d=current.states[current.current].data;
+  ['left','right'].forEach(side=>{
+    const bank=document.getElementById(side==='left'?'bankLeft':'bankRight');
+    if(bank)bank.innerHTML=d[side].map(n=>`<button class="person ${selectedPeople.includes(n)?'selected':''}" onclick="selectPerson('${n}')">${n}</button>`).join('')||'<span class="muted">Vazia</span>';
+  });
+  const boatLeft=document.getElementById('boatLeft'),boatRight=document.getElementById('boatRight');if(boatLeft)boatLeft.style.visibility=d.boat==='left'?'visible':'hidden';if(boatRight)boatRight.style.visibility=d.boat==='right'?'visible':'hidden';const label=document.getElementById('riverSelection');
+  if(label)label.textContent='Selecionados: '+(selectedPeople.join(' + ')||'nenhum');
+}
+function selectPerson(n){
+  let d=current.states[current.current].data;
+  if(!d[d.boat].includes(n))return;
+  if(selectedPeople.includes(n))selectedPeople=selectedPeople.filter(x=>x!==n);
+  else if(selectedPeople.length<2)selectedPeople=[...selectedPeople,n];
+  else{feedback('O barco leva no máximo duas pessoas.','bad');return}
+  drawRiver();
+}
+function moveBoat(){
+  let d=current.states[current.current].data;
+  if(!selectedPeople.length){feedback('Selecione uma ou duas pessoas para atravessar.','bad');return}
+  let from=d.boat,to=from==='left'?'right':'left';
+  let weight=selectedPeople.reduce((sum,n)=>sum+parseInt(n),0);
+  if(weight>130){penalty('error','O barco suporta no máximo 130 kg.');return}
+  let moving=[...selectedPeople];d[from]=d[from].filter(x=>!moving.includes(x));d[to].push(...moving);d.boat=to;selectedPeople=[];persist();drawRiver();
+  if(d.right.length===3)finishChallenge();else feedback('Travessia realizada. Planeje o próximo movimento.','good');
+}
+function resetRiver(){
+  let d=current.states[current.current].data;d.left=['60 kg','65 kg','80 kg'];d.right=[];d.boat='left';selectedPeople=[];penalty('restart','A travessia foi reiniciada.');drawRiver();
+}
+function renderMagic(a){let d=current.states[1].data;if(!d.cells)d.cells=Array(9).fill(null);a.innerHTML=`<h3>Monte o quadrado mágico</h3><p>Escolha um número disponível e depois selecione uma casa. Clique em uma casa preenchida para retirar o número.</p><div class="num-bank" id="numberBank"></div><div class="magic-grid" id="magicGrid"></div><div class="action-row"><button onclick="checkMagic()">Conferir quadrado</button><button class="secondary" onclick="clearMagic()">Limpar tudo</button></div>`;drawMagic()}
+function drawMagic(){let d=current.states[1].data;document.getElementById('numberBank').innerHTML=[1,2,3,4,5,6,7,8,9].map(n=>`<button class="num-chip ${d.cells.includes(n)?'used':''}" onclick="chooseMagic(${n})">${n}</button>`).join('');document.getElementById('magicGrid').innerHTML=d.cells.map((n,i)=>`<button class="magic-cell ${n?'filled':''}" onclick="putMagic(${i})">${n||''}</button>`).join('')}
+function chooseMagic(n){magicSelected=n;feedback('Número '+n+' selecionado. Escolha uma casa vazia.','info')}
+function putMagic(i){let d=current.states[1].data;if(d.cells[i]){d.cells[i]=null}else if(magicSelected&&!d.cells.includes(magicSelected)){d.cells[i]=magicSelected;magicSelected=null}else{feedback('Selecione um número disponível primeiro.','bad');return}persist();drawMagic()}
+function clearMagic(){current.states[1].data.cells=Array(9).fill(null);magicSelected=null;persist();drawMagic()}
+function checkMagic(){let v=current.states[1].data.cells;if(v.some(x=>!x)||new Set(v).size!==9){wrongAnswer('Preencha as nove casas sem repetir números.');return}let rows=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];if(rows.every(r=>r.reduce((s,k)=>s+v[k],0)===15))finishChallenge();else wrongAnswer('O quadrado ainda não atende a todas as somas. Seus números foram mantidos.')}
+function renderCode(a){a.innerHTML=`<h3>Digite a senha de seis algarismos</h3><p>Digite a sequência que atende a todas as condições apresentadas.</p><label>Senha</label><input id="codeInput" maxlength="6" inputmode="numeric" placeholder="______"><div class="action-row"><button onclick="checkCode()">Validar senha</button></div>`}
+function checkCode(){let v=document.getElementById('codeInput').value.trim();if(v==='426735')finishChallenge();else wrongAnswer('A senha não atende a todas as condições. Tente novamente.')}
+function renderCoin(a){let d=current.states[3].data;if(!d.weighings)d.weighings=[];coinSelection={left:[],right:[]};coinSide='left';weighings=d.weighings.length;a.innerHTML=`<h3>Encontre a moeda falsa</h3><p>Escolha as moedas e coloque-as nos pratos. Uma das moedas é ligeiramente mais leve. Você tem no máximo duas pesagens.</p><div class="coins" id="coinTray">${Array.from({length:9},(_,i)=>i+1).map(n=>`<button class="coin" onclick="toggleCoin(${n})">${n}</button>`).join('')}</div><div class="action-row"><button class="small ${coinSide==='left'?'':'secondary'}" onclick="setCoinSide('left')">Selecionar prato esquerdo</button><button class="small ${coinSide==='right'?'':'secondary'}" onclick="setCoinSide('right')">Selecionar prato direito</button></div><div class="scale"><div class="plate"><h4>Prato esquerdo</h4><div id="leftCoins">—</div></div><div class="plate"><h4>Prato direito</h4><div id="rightCoins">—</div></div></div><p id="weighCount" class="muted">Pesagens realizadas: ${weighings}/2</p><div class="action-row"><button onclick="weighCoins()" ${weighings>=2?'disabled':''}>⚖ Pesar</button><button class="secondary" onclick="clearScale()">Limpar pratos</button></div><label>Qual é a moeda falsa?</label><input id="coinAnswer" type="number" min="1" max="9" placeholder="Número da moeda"><div class="action-row"><button class="green" onclick="checkCoin()">Confirmar moeda</button><button class="secondary" onclick="resetCoin()">Reiniciar pesagens (−200)</button></div>`;drawCoins()}
+function setCoinSide(s){coinSide=s;let buttons=currentArea().querySelectorAll('.action-row button');buttons[0].classList.toggle('secondary',s!=='left');buttons[1].classList.toggle('secondary',s!=='right');}
+function currentArea(){return document.getElementById('challengeArea')}
+function toggleCoin(n){let arr=coinSelection[coinSide];if(arr.includes(n))coinSelection[coinSide]=arr.filter(x=>x!==n);else{coinSelection.left=coinSelection.left.filter(x=>x!==n);coinSelection.right=coinSelection.right.filter(x=>x!==n);coinSelection[coinSide].push(n)}drawCoins()}
+function drawCoins(){let a=currentArea();if(!a.querySelector('#leftCoins'))return;a.querySelector('#leftCoins').textContent=coinSelection.left.join(', ')||'—';a.querySelector('#rightCoins').textContent=coinSelection.right.join(', ')||'—';a.querySelectorAll('.coin').forEach(b=>{let n=Number(b.textContent);b.classList.toggle('on',coinSelection.left.includes(n)||coinSelection.right.includes(n))});a.querySelector('#weighCount').textContent='Pesagens realizadas: '+(current.states[3].data.weighings||[]).length+'/2'}
+function weighCoins(){if(weighings>=2)return;if(!coinSelection.left.length||!coinSelection.right.length){feedback('Coloque moedas nos dois pratos antes de pesar.','bad');return}let weight=arr=>arr.reduce((s,n)=>s+(n===8?9:10),0),l=weight(coinSelection.left),r=weight(coinSelection.right),result=l===r?'Equilíbrio':l<r?'Prato esquerdo mais leve':'Prato direito mais leve';current.states[3].data.weighings.push({left:[...coinSelection.left],right:[...coinSelection.right],result});weighings++;persist();feedback('Resultado da pesagem: '+result+'.','info');renderCoin(currentArea())}
+function clearScale(){coinSelection={left:[],right:[]};drawCoins()}
+function checkCoin(){let v=Number(document.getElementById('coinAnswer').value);if(v===8){finishChallenge();return}wrongAnswer('Essa não é a moeda falsa.')}
+function resetCoin(){current.states[3].data.weighings=[];weighings=0;coinSelection={left:[],right:[]};penalty('restart','As pesagens foram reiniciadas.');renderCoin(currentArea())}
+function renderJugs(a){let d=current.states[4].data;if(d.a==null){d.a=0;d.b=0}jug=d;a.innerHTML=`<h3>Consiga exatamente 4 litros</h3><p>Use a torneira, transfira água entre os baldes ou descarte o conteúdo. O objetivo é deixar exatamente 4 litros no balde de 5 L.</p><div class="jugs"><div class="jug-wrap"><div class="jug jug-five"><div class="water" id="waterA" style="height:${d.a/5*100}%"></div></div><div class="jug-label">Balde de 5 L</div><strong id="amountA">${d.a} L</strong><div class="jug-actions"><button class="small" onclick="fillJug('a')">Encher na torneira</button><button class="small secondary" onclick="emptyJug('a')">Descartar</button></div></div><div class="jug-wrap"><div class="jug jug-three"><div class="water" id="waterB" style="height:${d.b/3*100}%"></div></div><div class="jug-label">Balde de 3 L</div><strong id="amountB">${d.b} L</strong><div class="jug-actions"><button class="small" onclick="fillJug('b')">Encher na torneira</button><button class="small secondary" onclick="emptyJug('b')">Descartar</button></div></div></div><div class="card" style="padding:12px"><strong>Transferir água</strong><div class="action-row"><button class="secondary" onclick="pourJug('a','b')">5 L → 3 L</button><button class="secondary" onclick="pourJug('b','a')">3 L → 5 L</button></div></div><div class="action-row"><button class="green" onclick="finishJugs()">Finalizar e conferir</button><button class="danger" onclick="restartJugs()">Reiniciar desafio (−200)</button></div>`}
+function updateJugs(){let d=current.states[4].data;document.getElementById('waterA').style.height=(d.a/5*100)+'%';document.getElementById('waterB').style.height=(d.b/3*100)+'%';document.getElementById('amountA').textContent=d.a+' L';document.getElementById('amountB').textContent=d.b+' L';persist()}
+function fillJug(k){let d=current.states[4].data;d[k]=k==='a'?5:3;updateJugs()}
+function emptyJug(k){let d=current.states[4].data;d[k]=0;updateJugs()}
+function pourJug(from,to){let d=current.states[4].data,cap=to==='a'?5:3,move=Math.min(d[from],cap-d[to]);d[from]-=move;d[to]+=move;updateJugs()}
+function finishJugs(){if(current.states[4].data.a===4)finishChallenge();else wrongAnswer('Ainda não há exatamente 4 litros no balde de 5 L. Continue tentando.')}
+function restartJugs(){current.states[4].data={a:0,b:0};penalty('restart','Os baldes foram esvaziados e reiniciados.');renderJugs(currentArea())}
+function renderSquares(a){a.innerHTML=`<h3>Conte todos os quadrados</h3><p>Observe a malha 6 × 6 e informe quantos quadrados de todos os tamanhos existem.</p><div class="square-grid">${Array.from({length:36},()=>'<span></span>').join('')}</div><label>Quantidade total de quadrados</label><input id="squareAnswer" type="number" placeholder="Digite sua resposta"><div class="action-row"><button onclick="checkSquares()">Conferir resposta</button></div>`}
+function checkSquares(){if(Number(document.getElementById('squareAnswer').value)===91)finishChallenge();else wrongAnswer('A contagem não está correta. Revise os diferentes tamanhos de quadrados.')}
+function renderCards(){document.getElementById('challengeCards').innerHTML=challenges.map((c,i)=>`<div class="card"><span class="pill">${i===challenges.length-1?'DESAFIO FINAL':'DESAFIO '+(i+1)}</span><h3>${c.title}</h3><p class="muted" style="font-size:12px;margin:0">${c.minutes} minutos • ${c.points?fmt(c.points)+' pontos':'Desafio de raciocínio'}</p></div>`).join('')}
+load();renderCards();show('home');
+</script>
+</body></html>
